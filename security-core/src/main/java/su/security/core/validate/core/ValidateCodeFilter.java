@@ -1,36 +1,51 @@
 package su.security.core.validate.core;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
+import su.security.core.properties.SecurityProperties;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author 苏征
  * @date 2018-12-19
  */
-public class ValidateCodeFilter extends OncePerRequestFilter {
+public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+
+    private Set<String> urls = new HashSet<>();
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    private AntPathMatcher pathMatcher = new AntPathMatcher();
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (StringUtils.equals("/authentication/form", request.getRequestURI())
-        && StringUtils.endsWithIgnoreCase(request.getMethod(), "post")) {
+        boolean action = false;
+        for (String url : urls) {
+            if (pathMatcher.match(url, request.getRequestURI())) {
+                action = true;
+            }
+        }
+        if (action) {
             try {
                 validate(new ServletWebRequest(request));
             } catch (ValidateCodeException e) {
@@ -39,6 +54,16 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws ServletException {
+        super.afterPropertiesSet();
+        String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getImage().getUrl(), ",");
+        if (configUrls != null) {
+            urls.addAll(Arrays.asList(configUrls));
+        }
+        urls.add("/authentication/form");
     }
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
@@ -65,5 +90,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 
     public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
         this.authenticationFailureHandler = authenticationFailureHandler;
+    }
+
+    public SecurityProperties getSecurityProperties() {
+        return securityProperties;
+    }
+
+    public void setSecurityProperties(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
     }
 }

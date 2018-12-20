@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+
 /**
  * @author 苏征
  * @date 2018-12-14
@@ -20,4 +22,5 @@ public class Application {
     public String hello() {
         return "Hello Spring Security";
     }
+
 }
