@@ -11,4 +11,6 @@ public class BrowserProperties {
 
     private String loginPage = "/su-signIn.html";
 
+    private LoginType loginType = LoginType.JSON;
+
 }
