@@ -67,7 +67,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                         .userDetailsService(userDetailsService)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage(), "/code/image").permitAll()//登录页面一定要这个配置,不然系统会不停地跳转到这个页面,导致死循环
+                .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage(), "/code/*").permitAll()//登录页面一定要这个配置,不然系统会不停地跳转到这个页面,导致死循环
                 .anyRequest()
                 .authenticated()
                 .and()

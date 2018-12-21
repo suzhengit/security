@@ -75,7 +75,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         if (codeInSession == null) {
             throw new ValidateCodeException("验证码不存在");
         }
-        if (codeInSession.isExpried()) {
+        if (codeInSession.isExpired()) {
            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
         }
         if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
