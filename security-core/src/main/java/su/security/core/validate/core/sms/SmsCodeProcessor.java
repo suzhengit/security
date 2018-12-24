@@ -12,7 +12,7 @@ import su.security.core.validate.core.impl.AbstractValidateCodeProcessor;
  * @author 苏征
  * @date 2018-12-21
  */
-@Component("smsCodeProcessor")
+@Component("smsValidateCodeProcessor")
 public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 
     @Autowired
