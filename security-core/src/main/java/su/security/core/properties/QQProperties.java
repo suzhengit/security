@@ -1,6 +1,7 @@
 package su.security.core.properties;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.social.SocialProperties;
 
 /**
  * @author 苏征
