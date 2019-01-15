@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 import su.security.core.authentication.AbstractChannelSecurityConfig;
 import su.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import su.security.core.properties.SecurityConstants;
@@ -34,6 +35,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     private AuthenticationFailureHandler suAuthenticationFailureHandler;
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
+    @Autowired
+    private SpringSocialConfigurer springSocialConfigurer;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -60,6 +64,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
         http.apply(validateCodeSecurityConfig)
                 .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+                .apply(springSocialConfigurer)
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())

@@ -1,6 +1,5 @@
 package su.security.core.validate.core;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
  * @date 2018-12-21
  */
 @Data
-
 public class ValidateCode {
 
     private String code;

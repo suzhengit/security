@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * @author 苏征
@@ -65,7 +64,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
 
     @Override
-    public void afterPropertiesSet() throws ServletException {
+    public void afterPropertiesSet() {
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
         addUrlToMap(securityProperties.getCode().getImage().getUrl(), ValidateCodeType.IMAGE);
 
