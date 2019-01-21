@@ -10,6 +10,8 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.security.SpringSocialConfigurer;
+import su.security.core.properties.SecurityProperties;
+import su.security.core.properties.SocialProperties;
 
 import javax.sql.DataSource;
 
@@ -24,6 +26,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
@@ -32,6 +37,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Bean
     public SpringSocialConfigurer suSocialSecurityConfig() {
+        SocialProperties properties = securityProperties.getSocial();
+        SuSpringSocialConfigurer configurer = new SuSpringSocialConfigurer(properties.getFilterProcessUrl());
         return new SpringSocialConfigurer();
     }
 }
