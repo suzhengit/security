@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
-    @PostMapping("/regist")
-    public void regist(User user, HttpServletRequest request) {
+    @PostMapping("/register")
+    public void register(User user, HttpServletRequest request) {
         String userId = user.getUsername();
         providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
         //注册用户
