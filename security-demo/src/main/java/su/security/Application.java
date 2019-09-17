@@ -2,6 +2,7 @@ package su.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +20,9 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
     @GetMapping("/hello")
-    public String hello() {
-        return "Hello Spring Security";
+    public String hello(@CookieValue(value="JSESSIONID")String sessionId) {
+
+        return "Hello Spring Security" + sessionId;
     }
 
 }

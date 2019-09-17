@@ -10,16 +10,16 @@ import org.springframework.social.oauth2.AccessGrant;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WeiXinAccessGrant extends AccessGrant {
+public class WeixinAccessGrant extends AccessGrant {
 
     private static final long serialVersionUID = -7243374526633186782L;
 
     private String openId;
 
-    public WeiXinAccessGrant() {
+    public WeixinAccessGrant() {
         super("");
     }
-    public WeiXinAccessGrant(String accessToken, String scope, String refreshToken, Long expiresIn) {
+    public WeixinAccessGrant(String accessToken, String scope, String refreshToken, Long expiresIn) {
         super(accessToken, scope, refreshToken, expiresIn);
     }
 }
