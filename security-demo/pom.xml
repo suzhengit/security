@@ -12,9 +12,14 @@
     <artifactId>security-demo</artifactId>
 
     <dependencies>
-        <dependency>
+       <!-- <dependency>
             <groupId>su.security</groupId>
             <artifactId>security-browser</artifactId>
+            <version>${security.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>su.security</groupId>
+            <artifactId>security-app</artifactId>
             <version>${security.version}</version>
         </dependency>
         <dependency>

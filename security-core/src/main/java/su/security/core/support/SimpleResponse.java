@@ -1,4 +1,4 @@
-package su.security.browser.support;
+package su.security.core.support;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

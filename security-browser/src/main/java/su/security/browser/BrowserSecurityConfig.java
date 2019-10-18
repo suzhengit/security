@@ -35,10 +35,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     private AuthenticationFailureHandler suAuthenticationFailureHandler;
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
     @Autowired
     private DataSource dataSource;
 
